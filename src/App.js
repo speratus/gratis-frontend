@@ -8,12 +8,16 @@ import {
 import Navbar from './components/Navbar'
 import LoginForm from './components/LoginForm'
 import SignupForm from './components/SignupForm'
+import MainContainer from './containers/MainContainer'
 
 function App() {
   return (
     <Router>
       <Navbar />
       <Switch>
+        <Route exact path='/'>
+          <MainContainer />
+        </Route>
         <Route path='/login'>
           <LoginForm />
         </Route>

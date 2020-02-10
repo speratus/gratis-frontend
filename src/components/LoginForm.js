@@ -1,6 +1,6 @@
 import React from 'react'
 import {Button, Form, Grid, Header, Segment, Message} from 'semantic-ui-react'
-import {Link} from 'react-router-dom'
+import {Link, withRouter} from 'react-router-dom'
 import {baseURL} from '../index'
 
 class LoginForm extends React.Component {
@@ -27,7 +27,9 @@ class LoginForm extends React.Component {
             body: JSON.stringify({...this.state})
         }).then(res => res.json()).then(message => {
             localStorage.setItem('token', message.token)
+            this.props.history.push({pathname: '/', state: {loggedIn:true}})
         })
+        this.setState({username: '', password: ''})
     }
 
     render() {
@@ -68,4 +70,4 @@ class LoginForm extends React.Component {
     }
 }
 
-export default LoginForm
+export default withRouter(LoginForm)
