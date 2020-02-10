@@ -10,23 +10,42 @@ import LoginForm from './components/LoginForm'
 import SignupForm from './components/SignupForm'
 import MainContainer from './containers/MainContainer'
 
-function App() {
-  return (
-    <Router>
-      <Navbar />
-      <Switch>
-        <Route exact path='/'>
-          <MainContainer />
-        </Route>
-        <Route path='/login'>
-          <LoginForm />
-        </Route>
-        <Route path='/signup'>
-          <SignupForm />
-        </Route>
-      </Switch>
-    </Router>
-  )
+class App extends React.Component {
+
+  state = {
+    loggedIn: false
+  }
+
+  setLoggedIn = (loggedIn) => {
+    this.setState({
+      loggedIn: loggedIn
+    })
+  }
+
+  componentDidMount() {
+    if (localStorage.getItem('token')) {
+      this.setLoggedIn(true)
+    }
+  }
+
+  render() {
+    return (
+      <Router>
+        <Navbar loggedIn={this.state.loggedIn}/>
+        <Switch>
+          <Route exact path='/'>
+            <MainContainer />
+          </Route>
+          <Route path='/login'>
+            <LoginForm setLoggedIn={this.setLoggedIn}/>
+          </Route>
+          <Route path='/signup'>
+            <SignupForm />
+          </Route>
+        </Switch>
+      </Router>
+    )
+  }
 }
 
 export default App;

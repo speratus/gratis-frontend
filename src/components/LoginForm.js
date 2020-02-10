@@ -28,6 +28,7 @@ class LoginForm extends React.Component {
         }).then(res => res.json()).then(message => {
             localStorage.setItem('token', message.token)
             this.props.history.push({pathname: '/', state: {loggedIn:true}})
+            this.props.setLoggedIn(true)
         })
         this.setState({username: '', password: ''})
     }

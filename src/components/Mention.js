@@ -2,9 +2,10 @@ import React from 'react'
 
 import {Segment, Feed} from 'semantic-ui-react'
 
-const Gratis = props => {
+const Mention = props => {
     const {name, username, avatar} = props.mention.shoutout.user
-    const {content} = props.mention.shoutout
+    const {content, mentions} = props.mention.shoutout
+    const mentionText = mentions.map(m => `@${m.user.username}`).join(' ')
 
     return <Segment>
         <Feed.Event>
@@ -15,7 +16,7 @@ const Gratis = props => {
                 </Feed.Summary>
                 <Feed.Meta>{username}</Feed.Meta>
                 <Feed.Extra as='h2'>
-                    {content}
+                    {mentionText} {content}
                 </Feed.Extra>
             </Feed.Content>
 
@@ -23,4 +24,4 @@ const Gratis = props => {
     </Segment>
 }
 
-export default Gratis
+export default Mention

@@ -3,9 +3,10 @@ import {Redirect} from 'react-router-dom'
 
 import WelcomeComponent from '../components/WelcomeComponent'
 import MyMentionsList from './MyMentionsList'
+import ShoutoutList from './ShoutoutList'
 import {baseURL} from '../index'
 
-import {Loader, Container} from 'semantic-ui-react'
+import {Container, Rail, Grid} from 'semantic-ui-react'
 
 class MainContainer extends React.Component {
 
@@ -31,7 +32,14 @@ class MainContainer extends React.Component {
 
     renderHomeIfLoggedIn() {
         if (this.state.allData.id) {
-            return <MyMentionsList mentions={this.state.allData.mentions} />
+            return <Grid centered columns={3}>
+                <Grid.Column>
+                    <MyMentionsList mentions={this.state.allData.mentions} />
+                    <Rail position='right'>
+                        <ShoutoutList shoutouts={this.state.allData.shoutouts} />
+                    </Rail>
+                </Grid.Column>
+            </Grid>
         } else {
             return <WelcomeComponent />
         }
