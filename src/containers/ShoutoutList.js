@@ -9,7 +9,7 @@ const ShoutoutList = props => {
         <Header as='h2'>Your Shoutouts</Header>
         <Feed>
             {
-                props.shoutouts.map(s => <SidebarShoutout shoutout={s} />)
+                props.shoutouts.map((s, i) => <SidebarShoutout shoutout={s} key={i}/>)
             }
         </Feed>
     </Container>

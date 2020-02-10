@@ -16,22 +16,16 @@ class App extends React.Component {
     loggedIn: false
   }
 
-  setLoggedIn = (loggedIn) => {
-    this.setState({
-      loggedIn: loggedIn
-    })
-  }
-
   componentDidMount() {
     if (localStorage.getItem('token')) {
-      this.setLoggedIn(true)
+      this.setState({loggedIn: true})
     }
   }
 
   render() {
     return (
       <Router>
-        <Navbar loggedIn={this.state.loggedIn}/>
+        <Navbar loggedIn={this.state.loggedIn} />
         <Switch>
           <Route exact path='/'>
             <MainContainer />
