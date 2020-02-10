@@ -59,7 +59,7 @@ class MainContainer extends React.Component {
                         </Rail>
                     </Grid.Column>
                 </Grid>
-                <NewShoutoutForm open={this.state.addingNewShoutout} hideModal={this.hideModal}/>
+                <NewShoutoutForm open={this.state.addingNewShoutout} hideModal={this.hideModal} friends={this.state.allData.friends}/>
             </React.Fragment>
         } else {
             return <WelcomeComponent />
