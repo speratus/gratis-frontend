@@ -10,6 +10,7 @@ import {Link} from 'react-router-dom'
 const Navbar = props => {
     return <Menu fixed='top' inverted>
         <Container>
+            <Menu.Item as={Link} to='/'>Home</Menu.Item>
             <Menu.Menu position='right' >
                 <Menu.Item as={Link} to='/login'>Login</Menu.Item>
                 <Menu.Item as={Link} to='/signup'>Signup</Menu.Item>

@@ -4,7 +4,7 @@ import {Segment, Feed} from 'semantic-ui-react'
 
 const Gratis = props => {
     const {name, username, avatar} = props.mention.shoutout.user
-    const {content} = props.mention.shoutout.content
+    const {content} = props.mention.shoutout
 
     return <Segment>
         <Feed.Event>

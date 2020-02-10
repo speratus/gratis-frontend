@@ -2,11 +2,15 @@ import React from 'react'
 import {Redirect} from 'react-router-dom'
 
 import WelcomeComponent from '../components/WelcomeComponent'
+import MyMentionsList from './MyMentionsList'
 import {baseURL} from '../index'
+
+import {Loader, Container} from 'semantic-ui-react'
 
 class MainContainer extends React.Component {
 
     state = {
+        loaded: false,
         allData: {}
     }
 
@@ -19,27 +23,24 @@ class MainContainer extends React.Component {
                     'Access-Token': localStorage.getItem('token')
                 }
             }).then(res => res.json()).then(data => {
+                console.log(data)
                 this.setState({allData: data})
             })
         }
     }
 
     renderHomeIfLoggedIn() {
-        console.log('Rendering main')
-        if (this.state.allDatalength !== {}) {
-            console.log('rendering mentions')
-            //Render Mentions
-            return null
+        if (this.state.allData.id) {
+            return <MyMentionsList mentions={this.state.allData.mentions} />
         } else {
-            console.log('rendering welcome')
-            return <Redirect to='/login'/>
+            return <WelcomeComponent />
         }
     }
 
     render() {
-        return <React.Fragment>
+        return <Container style={{marginTop: '4em'}}>
             {this.renderHomeIfLoggedIn()}
-        </React.Fragment>
+        </Container>
     }
 }
 
