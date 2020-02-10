@@ -40,13 +40,13 @@ class MainContainer extends React.Component {
     addNewForm = () => {
         this.setState({addingNewShoutout: true})
     }
-    
+
     hideModal = () => {
         this.setState({addingNewShoutout: false})
     }
 
     renderHomeIfLoggedIn() {
-        if (this.state.allData.id) {
+        if (this.props.loggedIn && this.state.allData.id) {
             return <React.Fragment>
                 <Grid centered columns={3}>
                     <Grid.Column>

@@ -22,13 +22,22 @@ class App extends React.Component {
     }
   }
 
+  onLogout = () => {
+    localStorage.removeItem('token')
+    this.setLoggedIn(false)
+  }
+
+  setLoggedIn = loggedIn => {
+    this.setState({loggedIn: loggedIn})
+  }
+
   render() {
     return (
       <Router>
-        <Navbar loggedIn={this.state.loggedIn} />
+        <Navbar loggedIn={this.state.loggedIn} onLogout={this.onLogout}/>
         <Switch>
           <Route exact path='/'>
-            <MainContainer />
+            <MainContainer loggedIn={this.state.loggedIn}/>
           </Route>
           <Route path='/login'>
             <LoginForm setLoggedIn={this.setLoggedIn}/>
