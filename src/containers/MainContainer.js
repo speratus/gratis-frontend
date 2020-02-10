@@ -1,27 +1,38 @@
 import React from 'react'
+import {Redirect} from 'react-router-dom'
+
 import WelcomeComponent from '../components/WelcomeComponent'
+import {baseURL} from '../index'
 
 class MainContainer extends React.Component {
 
     state = {
-        mentions: []
+        allData: {}
     }
 
     componentDidMount() {
         if (localStorage.getItem('token')) {
-            //Fetch mentions
+            fetch(baseURL+'profile', {
+                method: 'GET',
+                headers: {
+                    Accept: 'application/json',
+                    'Access-Token': localStorage.getItem('token')
+                }
+            }).then(res => res.json()).then(data => {
+                this.setState({allData: data})
+            })
         }
     }
 
     renderHomeIfLoggedIn() {
         console.log('Rendering main')
-        if (this.state.mentions.length > 0) {
+        if (this.state.allDatalength !== {}) {
             console.log('rendering mentions')
             //Render Mentions
             return null
         } else {
             console.log('rendering welcome')
-            return <WelcomeComponent />
+            return <Redirect to='/login'/>
         }
     }
 
