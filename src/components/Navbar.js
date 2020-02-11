@@ -23,7 +23,10 @@ const Navbar = props => {
 
     const loggedInLeftRender = () =>  {
         if (props.loggedIn) {
-            return <UserSearchModal />
+            return <React.Fragment>
+                <Menu.Item as={Link} to='/friends'><Icon name='users' />Friends</Menu.Item>
+                <UserSearchModal />
+            </React.Fragment>
         }
     }
 

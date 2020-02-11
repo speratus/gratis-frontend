@@ -2,7 +2,7 @@ import React from 'react'
 import {Redirect} from 'react-router-dom'
 
 import WelcomeComponent from '../components/WelcomeComponent'
-import MyMentionsList from './MyMentionsList'
+import MainList from './MainList'
 import ShoutoutList from './ShoutoutList'
 import {baseURL} from '../index'
 
@@ -56,7 +56,7 @@ class MainContainer extends React.Component {
                         <Rail position='left'>
                             <Button onClick={this.addNewForm}><Icon name="plus"/>New Shoutout</Button>
                         </Rail>
-                        <MyMentionsList mentions={this.state.mentions} />
+                        <MainList shoutouts={this.state.mentions} heading={"You've been thanked!"}/>
                         <Rail position='right'>
                             <ShoutoutList shoutouts={this.state.shoutouts} />
                         </Rail>

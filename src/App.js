@@ -9,6 +9,7 @@ import Navbar from './components/Navbar'
 import LoginForm from './components/LoginForm'
 import SignupForm from './components/SignupForm'
 import MainContainer from './containers/MainContainer'
+import FriendsContainer from './containers/FriendsContainer'
 
 class App extends React.Component {
 
@@ -44,6 +45,9 @@ class App extends React.Component {
           </Route>
           <Route path='/signup'>
             <SignupForm />
+          </Route>
+          <Route path='/friends'>
+            <FriendsContainer loggedIn={this.state.loggedIn}/>
           </Route>
         </Switch>
       </Router>

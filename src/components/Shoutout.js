@@ -2,7 +2,7 @@ import React from 'react'
 
 import {Segment, Feed} from 'semantic-ui-react'
 
-const Mention = props => {
+const Shoutout = props => {
     const {name, username, avatar} = props.mention.shoutout.user
     const {content, mentions} = props.mention.shoutout
     const mentionText = mentions.map(m => `@${m.user.username}`).join(' ')
@@ -24,4 +24,4 @@ const Mention = props => {
     </Segment>
 }
 
-export default Mention
+export default Shoutout

@@ -43,7 +43,7 @@ class UserSearchModal extends React.Component {
     render() {
         return <Modal 
                     dimmer='blurring'
-                    trigger={<Menu.Item as='a'><Icon name="users" />Search People</Menu.Item>}
+                    trigger={<Menu.Item as='a'><Icon name="address book outline" />Search People</Menu.Item>}
                     closeIcon
                 >
             <Modal.Header>Search for people by username or by name</Modal.Header>
