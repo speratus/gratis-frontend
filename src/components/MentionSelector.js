@@ -12,12 +12,9 @@ class MentionSelector extends React.Component {
         const {friends} = this.props
         this.setState({value: value})
         // console.log(value)
-        const results = friends.filter(f => {
-            // console.log(f)
-            const user = f.username.startsWith(value)
-            // console.log(user)
-            return user
-        })
+        const results = friends.filter(f => (
+            f.username.startsWith(value) || f.name.toLowerCase().startsWith(value.toLowerCase())
+            ))
         this.setState({results: results.map(f => {
             return {title: f.name, description: f.username, image: f.avatar, ...f}
         })})
