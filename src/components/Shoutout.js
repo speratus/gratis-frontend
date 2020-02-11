@@ -3,8 +3,8 @@ import React from 'react'
 import {Segment, Feed} from 'semantic-ui-react'
 
 const Shoutout = props => {
-    const {name, username, avatar} = props.mention.shoutout.user
-    const {content, mentions} = props.mention.shoutout
+    const {name, username, avatar} = props.shoutout.user
+    const {content, mentions} = props.shoutout
     const mentionText = mentions.map(m => `@${m.user.username}`).join(' ')
 
     return <Segment>

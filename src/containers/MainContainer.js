@@ -3,7 +3,7 @@ import {Redirect} from 'react-router-dom'
 
 import WelcomeComponent from '../components/WelcomeComponent'
 import MainList from './MainList'
-import ShoutoutList from './ShoutoutList'
+import SidebarList from './SidebarList'
 import {baseURL} from '../index'
 
 import {Container, Rail, Grid, Icon, Button} from 'semantic-ui-react'
@@ -58,7 +58,7 @@ class MainContainer extends React.Component {
                         </Rail>
                         <MainList shoutouts={this.state.mentions} heading={"You've been thanked!"}/>
                         <Rail position='right'>
-                            <ShoutoutList shoutouts={this.state.shoutouts} />
+                            <SidebarList shoutouts={this.state.shoutouts} heading={"Your Shoutouts"}/>
                         </Rail>
                     </Grid.Column>
                 </Grid>

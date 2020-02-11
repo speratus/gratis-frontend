@@ -9,7 +9,7 @@ const MainList = props => {
         <Header as='h1'>{props.heading}</Header>
         <Feed>
             {
-                props.shoutouts.map((m,i) => <Shoutout key={i} mention={m} />)
+                props.shoutouts.map((m,i) => <Shoutout key={i} shoutout={m.shoutout} />)
             }
         </Feed>
     </Container>
