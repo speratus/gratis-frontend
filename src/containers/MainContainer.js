@@ -17,6 +17,8 @@ class MainContainer extends React.Component {
         this.formContainer = React.createRef()
         this.state = {
             allData: {},
+            shoutouts: [],
+            mentions: [],
             addingNewShoutout: false
         }
     }
@@ -32,7 +34,8 @@ class MainContainer extends React.Component {
                 }
             }).then(res => res.json()).then(data => {
                 console.log(data)
-                this.setState({allData: data})
+                const {shoutouts, mentions} = data
+                this.setState({allData: data, shoutouts: shoutouts, mentions: mentions})
             })
         }
     }
@@ -53,9 +56,9 @@ class MainContainer extends React.Component {
                         <Rail position='left'>
                             <Button onClick={this.addNewForm}><Icon name="plus"/>New Shoutout</Button>
                         </Rail>
-                        <MyMentionsList mentions={this.state.allData.mentions} />
+                        <MyMentionsList mentions={this.state.mentions} />
                         <Rail position='right'>
-                            <ShoutoutList shoutouts={this.state.allData.shoutouts} />
+                            <ShoutoutList shoutouts={this.state.shoutouts} />
                         </Rail>
                     </Grid.Column>
                 </Grid>
@@ -64,11 +67,18 @@ class MainContainer extends React.Component {
                     hideModal={this.hideModal} 
                     friends={this.state.allData.friends}
                     currentUserId={this.state.allData.id}
+                    addShoutout={this.addShoutout}
                 />
             </React.Fragment>
         } else {
             return <WelcomeComponent />
         }
+    }
+
+    addShoutout = shoutout => {
+        this.setState({
+            shoutouts: [...this.state.shoutouts, shoutout]
+        })
     }
 
     render() {

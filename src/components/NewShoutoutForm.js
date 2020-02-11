@@ -2,7 +2,7 @@ import React from 'react'
 
 import {Modal, Form, TextArea, Button, Header, Container, Dropdown} from 'semantic-ui-react'
 import MentionSelector from './MentionSelector'
-import Mention from './Mention'
+import {baseURL} from '../index'
 
 class NewShoutoutForm extends React.Component {
 
@@ -125,7 +125,30 @@ class NewShoutoutForm extends React.Component {
 
     onSubmit = e => {
         e.preventDefault()
+        
+        const content = this.contentSuffix(this.state.content)
+        const mentions = this.state.mentionedUsers.map(u => {return {user_id: u.id}})
+        const messageBody = {
+            user_id: this.props.currentUserId,
+            content: content,
+            mentions_attributes: mentions,
+            visibility: this.state.visibility
+        }  
+        console.log(messageBody)
 
+        fetch(baseURL+'shoutouts', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+                'Access-Token': localStorage.getItem('token')
+            },
+            body: JSON.stringify(messageBody)
+        }).then(res => res.json()).then(shoutout => {
+            console.log(shoutout)
+            this.props.addShoutout(shoutout)
+            this.props.hideModal()
+        })
     }
 
     onDropdownChange = e => {
@@ -149,7 +172,9 @@ class NewShoutoutForm extends React.Component {
                     value={this.state.visibility}
                     onChange={this.onDropdownChange}
                 />
-                <Form>
+                <Form
+                    onSubmit={this.onSubmit}
+                >
                     <TextArea 
                         placeholder="Thanks! You're a great friend" 
                         onChange={this.onType} 
@@ -157,7 +182,7 @@ class NewShoutoutForm extends React.Component {
                         autoFocus
                     />
                     <Header.Subheader>Remaining: {this.remainingWidget()}</Header.Subheader>
-                    <Button color='green'>Save Shoutout</Button>
+                    <Button type='submit' color='green'>Save Shoutout</Button>
                     <Button color='red' onClick={() => {
                         this.setState({...this.initialState})
                         this.props.hideModal()
