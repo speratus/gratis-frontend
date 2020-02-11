@@ -6,7 +6,7 @@ import {Redirect} from 'react-router-dom'
 import UserCard from '../components/UserCard'
 import {baseURL} from '../index'
 
-class FriendsContainer extends React.Component {
+class FriendListContainer extends React.Component {
 
     state = {
         allData: {},
@@ -55,4 +55,4 @@ class FriendsContainer extends React.Component {
 
 }
 
-export default FriendsContainer
+export default FriendListContainer

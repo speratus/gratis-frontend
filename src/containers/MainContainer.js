@@ -2,7 +2,7 @@ import React from 'react'
 import {Redirect} from 'react-router-dom'
 
 import WelcomeComponent from '../components/WelcomeComponent'
-import MainList from './MainList'
+import ShoutoutList from './ShoutoutList'
 import SidebarList from './SidebarList'
 import {baseURL} from '../index'
 
@@ -14,7 +14,6 @@ class MainContainer extends React.Component {
     constructor(props) {
         super(props)
 
-        this.formContainer = React.createRef()
         this.state = {
             allData: {},
             shoutouts: [],
@@ -56,7 +55,7 @@ class MainContainer extends React.Component {
                         <Rail position='left'>
                             <Button onClick={this.addNewForm}><Icon name="plus"/>New Shoutout</Button>
                         </Rail>
-                        <MainList shoutouts={this.state.mentions} heading={"You've been thanked!"}/>
+                        <ShoutoutList shoutouts={this.state.mentions} heading={"You've been thanked!"}/>
                         <Rail position='right'>
                             <SidebarList shoutouts={this.state.shoutouts} heading={"Your Shoutouts"}/>
                         </Rail>

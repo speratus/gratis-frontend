@@ -9,7 +9,8 @@ import Navbar from './components/Navbar'
 import LoginForm from './components/LoginForm'
 import SignupForm from './components/SignupForm'
 import MainContainer from './containers/MainContainer'
-import FriendsContainer from './containers/FriendsContainer'
+import FriendListContainer from './containers/FriendListContainer'
+import FriendContainer from './containers/FriendContainer'
 
 class App extends React.Component {
 
@@ -47,8 +48,12 @@ class App extends React.Component {
             <SignupForm />
           </Route>
           <Route path='/friends'>
-            <FriendsContainer loggedIn={this.state.loggedIn}/>
+            <FriendListContainer loggedIn={this.state.loggedIn}/>
           </Route>
+          <Route path='/users/:userId' render={routeParams => {
+            console.log(routeParams)
+            return <FriendContainer {...routeParams} />
+          }} />
         </Switch>
       </Router>
     )

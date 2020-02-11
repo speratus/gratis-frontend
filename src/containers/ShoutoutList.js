@@ -4,14 +4,14 @@ import {Feed, Container, Header} from 'semantic-ui-react'
 
 import Shoutout from '../components/Shoutout'
 
-const SidebarList = props => {
+const ShoutoutList = props => {
     return <Container>
-        <Header as='h2'>{props.heading}</Header>
+        <Header as='h1'>{props.heading}</Header>
         <Feed>
             {
-                props.shoutouts.map((s, i) => <Shoutout 
-                    shoutout={s} 
+                props.shoutouts.map((m,i) => <Shoutout 
                     key={i} 
+                    shoutout={m} 
                     small={props.small} 
                     includeHeader={props.includeHeader}
                     removeUser={props.removeUser}
@@ -21,4 +21,4 @@ const SidebarList = props => {
     </Container>
 }
 
-export default SidebarList
+export default ShoutoutList
