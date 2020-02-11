@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {Modal, Form, TextArea, Button, Header, Segment} from 'semantic-ui-react'
+import {Modal, Form, TextArea, Button, Header, Container, Dropdown} from 'semantic-ui-react'
 import MentionSelector from './MentionSelector'
 import Mention from './Mention'
 
@@ -17,8 +17,22 @@ class NewShoutoutForm extends React.Component {
         content: "",
         mentionedUsers: [],
         removeThreshold: 0,
-        showingMentioner: false
+        showingMentioner: false,
+        visibility: 'friends'
     }
+
+    visibilityOptions = [
+        {
+            key: "friends",
+            value: 'friends',
+            text: 'Friends Only'
+        },
+        {
+            key: 'public',
+            value: 'public',
+            text: 'Public'
+        }
+    ]
 
     maxChars = 256
 
@@ -109,6 +123,15 @@ class NewShoutoutForm extends React.Component {
         })
     }
 
+    onSubmit = e => {
+        e.preventDefault()
+
+    }
+
+    onDropdownChange = e => {
+        this.setState({visibility: e.target.value})
+    }
+
     render() {
         return <Modal 
                     open={this.props.open} 
@@ -116,8 +139,16 @@ class NewShoutoutForm extends React.Component {
                 >
             <Modal.Header>Thank Somebody!</Modal.Header>
             <Modal.Content>
-                <p>Type @ and a username to mention a user.</p>
+                <p>Type @ to search for a user to mention.</p>
                 <p>You have 256 characters in which to write your message</p>
+                <label htmlFor="visibility">Select the visibility of your shoutout: </label>
+                <Dropdown
+                    placeholder="Select Visibility"
+                    options={this.visibilityOptions}
+                    name="visibility"
+                    value={this.state.visibility}
+                    onChange={this.onDropdownChange}
+                />
                 <Form>
                     <TextArea 
                         placeholder="Thanks! You're a great friend" 
