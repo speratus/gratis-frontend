@@ -24,9 +24,9 @@ class NewShoutoutForm extends React.Component {
 
     mentionsLength = (usersList) => {
         if (usersList) {
-            return usersList.map(u => `@${u.username}`).join("").length
+            return this.contentPrefix(usersList).length
         } else {
-            return this.state.mentionedUsers.map(u => `@${u.username}`).join("").length
+            return this.contentPrefix().length
         }
     }
 
