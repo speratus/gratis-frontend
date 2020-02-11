@@ -6,13 +6,11 @@ import {
 } from 'semantic-ui-react'
 
 import {Link} from 'react-router-dom'
-
-import NewShoutoutForm from './NewShoutoutForm'
-
+import UserSearchModal from './UserSearchModal'
 
 const Navbar = props => {
 
-    const loggedInRender= () => {
+    const loggedInRightRender = () => {
         if (props.loggedIn) {
             return <Menu.Item as="a" onClick={props.onLogout}>Logout</Menu.Item>
         } else {
@@ -23,11 +21,18 @@ const Navbar = props => {
         }
     }
 
+    const loggedInLeftRender = () =>  {
+        if (props.loggedIn) {
+            return <UserSearchModal />
+        }
+    }
+
     return <Menu fixed='top' inverted>
         <Container>
             <Menu.Item as={Link} to='/'><Icon name="home"/>Home</Menu.Item>
+            {loggedInLeftRender()}
             <Menu.Menu position='right' >
-                {loggedInRender()}
+                {loggedInRightRender()}
             </Menu.Menu>
         </Container>
     </Menu>
