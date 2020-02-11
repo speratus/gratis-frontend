@@ -11,15 +11,15 @@ class MentionSelector extends React.Component {
     onSearchChange = (e, {value}) => {
         const {friends} = this.props
         this.setState({value: value})
-        console.log(value)
+        // console.log(value)
         const results = friends.filter(f => {
-            console.log(f)
+            // console.log(f)
             const user = f.username.startsWith(value)
-            console.log(user)
+            // console.log(user)
             return user
         })
         this.setState({results: results.map(f => {
-            return {title: f.name, description: f.username, image: f.avatar}
+            return {title: f.name, description: f.username, image: f.avatar, ...f}
         })})
     }
 
@@ -28,10 +28,10 @@ class MentionSelector extends React.Component {
     }
 
     render() {
-        console.log(this.props.friends)
         return <Modal open={this.props.open}>
             <Modal.Header>Select a user to Mention</Modal.Header>
             <Modal.Content>
+                <label>Type the username you want to find below</label>
                 <Search
                     onSearchChange={this.onSearchChange}
                     onResultSelect={this.onResultSelect}
