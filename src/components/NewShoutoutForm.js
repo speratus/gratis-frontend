@@ -22,10 +22,12 @@ class NewShoutoutForm extends React.Component {
 
     maxChars = 256
 
-    mentionsLength = () => {
-        const length = this.state.mentionedUsers.map(u => `@${u.username}`).join("").length
-        // console.log('mentions length from inside the function', length)
-        return length
+    mentionsLength = (usersList) => {
+        if (usersList) {
+            return usersList.map(u => `@${u.username}`).join("").length
+        } else {
+            return this.state.mentionedUsers.map(u => `@${u.username}`).join("").length
+        }
     }
 
     totalLength = () => {
@@ -50,8 +52,12 @@ class NewShoutoutForm extends React.Component {
         return effect.length
     }
 
-    contentPrefix = () => {
-        return this.state.mentionedUsers.map(u => `@${u.username}`).join(' ')
+    contentPrefix = (userList) => {
+        if (userList) {
+            return userList.map(u => `@${u.username}`).join(' ')
+        } else {
+            return this.state.mentionedUsers.map(u => `@${u.username}`).join(' ')
+        }
     }
 
     contentSuffix = content => {
@@ -68,11 +74,10 @@ class NewShoutoutForm extends React.Component {
             const users = [...this.state.mentionedUsers]
             users.pop()
             let content = e.target.value
-            this.setState({mentionedUsers: users}, () => {
-                this.setState({
-                    content: this.contentPrefix() + this.contentSuffix(content),
-                    removeThreshold: this.mentionsLength()
-                })
+            this.setState({
+                mentionedUsers: users,
+                content: this.contentPrefix(users) + this.contentSuffix(content),
+                removeThreshold: this.mentionsLength(users)
             })
             return
         }
@@ -95,12 +100,12 @@ class NewShoutoutForm extends React.Component {
         // console.log('selected user', user)
         // console.log('mentions length', this.mentionsLength())
         const content = this.contentSuffix(this.state.content)
+        const newUsers = [...this.state.mentionedUsers, user]
         this.setState({
             showingMentioner: false, 
-            mentionedUsers: [...this.state.mentionedUsers, user],
-            removeThreshold: this.mentionsLength(),
-        }, () => {
-            this.setState({content: this.contentPrefix() + content})
+            mentionedUsers: newUsers,
+            removeThreshold: this.mentionsLength(newUsers),
+            content: this.contentPrefix(newUsers) + content
         })
     }
 
