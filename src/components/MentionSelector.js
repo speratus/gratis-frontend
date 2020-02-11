@@ -34,6 +34,7 @@ class MentionSelector extends React.Component {
                     onResultSelect={this.onResultSelect}
                     value={this.state.value}
                     results={this.state.results}
+                    autoFocus
                 ></Search>
             </Modal.Content>
             <Modal.Actions>

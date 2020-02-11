@@ -123,6 +123,7 @@ class NewShoutoutForm extends React.Component {
                         placeholder="Thanks! You're a great friend" 
                         onChange={this.onType} 
                         value={this.state.content}
+                        autoFocus
                     />
                     <Header.Subheader>Remaining: {this.remainingWidget()}</Header.Subheader>
                     <Button color='green'>Save Shoutout</Button>
