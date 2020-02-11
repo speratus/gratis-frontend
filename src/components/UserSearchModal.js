@@ -40,6 +40,10 @@ class UserSearchModal extends React.Component {
         this.setState({results: results, value: value})
     }
 
+    onResultSelected = (e, {result}) => {
+        this.props.selectUser(result)
+    }
+
     render() {
         return <Modal 
                     dimmer='blurring'
@@ -50,6 +54,7 @@ class UserSearchModal extends React.Component {
             <Modal.Content>
                 <Search 
                     onSearchChange={this.onSearchChange}
+                    onResultSelect={this.onResultSelected}
                     value={this.state.value}
                     results={this.state.results}
                     autoFocus

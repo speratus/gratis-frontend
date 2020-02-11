@@ -5,7 +5,7 @@ import {
     Icon,
 } from 'semantic-ui-react'
 
-import {Link} from 'react-router-dom'
+import {Link, withRouter} from 'react-router-dom'
 import UserSearchModal from './UserSearchModal'
 
 const Navbar = props => {
@@ -21,11 +21,16 @@ const Navbar = props => {
         }
     }
 
+    const displayUserPage = user => {
+        console.log('displaying user', user)
+        props.history.push({pathname: `/users/${user.id}`, state: {loggedIn: true}})
+    }
+
     const loggedInLeftRender = () =>  {
         if (props.loggedIn) {
             return <React.Fragment>
                 <Menu.Item as={Link} to='/friends'><Icon name='users' />Friends</Menu.Item>
-                <UserSearchModal />
+                <UserSearchModal selectUser={displayUserPage}/>
             </React.Fragment>
         }
     }
@@ -41,4 +46,4 @@ const Navbar = props => {
     </Menu>
 }
 
-export default Navbar
+export default withRouter(Navbar)
