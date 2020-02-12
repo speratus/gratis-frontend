@@ -12,7 +12,10 @@ const Navbar = props => {
 
     const loggedInRightRender = () => {
         if (props.loggedIn) {
-            return <Menu.Item as="a" onClick={props.onLogout}>Logout</Menu.Item>
+            return <React.Fragment>
+                <Menu.Item to={`/users/${props.currentUserId}`} as={Link}><Icon name="user"/>Profile</Menu.Item>
+                <Menu.Item as="a" onClick={props.onLogout}>Logout</Menu.Item>
+            </React.Fragment>
         } else {
             return <React.Fragment>
                 <Menu.Item as={Link} to='/login'><Icon name="user"/>Login</Menu.Item>
