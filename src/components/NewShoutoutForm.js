@@ -11,14 +11,43 @@ class NewShoutoutForm extends React.Component {
         this.state = {
             ...this.initialState
         }
+        if (props.shoutout.id) {
+            console.log('got a shoutout')
+            const {content, mentions} = props.shoutout
+            this.state = {
+                content: content,
+                mentionedUsers: mentions.map(m => m.user)
+            }
+        } else {
+            console.log("didn't get a shoutout")
+            
+        }
+    }
+
+    static getDerivedStateFromProps(props, state) {
+        // console.log('checking props', props, 'state:', state)
+        if (props.shoutout !== state.prevShoutout) {
+            // console.log('change detected', state.shoutout, 'is not', props.shoutout)
+            const {content, mentions} = props.shoutout
+            const users = mentions.map(m => m.user)
+            const prefix = users.map(u => `@${u.username}`).join(' ')
+            return {
+                prevShoutout: props.shoutout,
+                content: prefix + content,
+                mentionedUsers: users,
+                removeThreshold: prefix.length
+            }
+        }
+        return null
     }
 
     initialState = {
-        content: "",
-        mentionedUsers: [],
+        content: this.props.shoutout.content,
+        mentionedUsers: this.props.shoutout.mentions.map(m => m.user),
         removeThreshold: 0,
         showingMentioner: false,
-        visibility: 'friends'
+        visibility: 'friends',
+        hasChanged: false
     }
 
     visibilityOptions = [
@@ -45,7 +74,9 @@ class NewShoutoutForm extends React.Component {
     }
 
     totalLength = () => {
-        const length =  this.mentionsLength() + this.state.content.length
+        console.log(this.state)
+        const length = this.mentionsLength() + this.contentSuffix(this.state.content).length
+        // const length = this.mentionsLength() + this.state.content.length
         return length
     }
 
@@ -134,31 +165,83 @@ class NewShoutoutForm extends React.Component {
             mentions_attributes: mentions,
             visibility: this.state.visibility
         }  
-        console.log(messageBody)
+        console.log('sending message', messageBody)
 
-        fetch(baseURL+'shoutouts', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-                'Access-Token': localStorage.getItem('token')
-            },
-            body: JSON.stringify(messageBody)
-        }).then(res => res.json()).then(shoutout => {
-            console.log(shoutout)
-            this.props.addShoutout(shoutout)
-            this.props.hideModal()
-        })
+        if (!this.props.shoutout.id) {
+            fetch(baseURL+'shoutouts', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json',
+                    'Access-Token': localStorage.getItem('token')
+                },
+                body: JSON.stringify(messageBody)
+            }).then(res => res.json()).then(shoutout => {
+                console.log('received new shoutout', shoutout)
+                this.props.addShoutout(shoutout)
+                this.props.hideModal()
+            })
+        } else {
+            fetch(baseURL+`shoutouts/${this.props.shoutout.id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json',
+                    'Access-Token': localStorage.getItem('token')
+                },
+                body: JSON.stringify(messageBody)
+            }).then(res => res.json()).then(shoutout => {
+                console.log('received shoutout', shoutout)
+                this.props.replaceShoutout(shoutout)
+                this.props.hideModal()
+            })
+        }
+
     }
 
     onDropdownChange = e => {
         this.setState({visibility: e.target.value})
     }
 
+    selectContent() {
+        if (this.props.shoutout.id) {
+            console.log('got a shoutout')
+            const {content, mentions} = this.props.shoutout
+            this.setState({
+                content: content,
+                mentionedUsers: mentions.map(m => m.user)
+            })
+        }
+    }
+
+    deleteShoutout = () => {
+        fetch(baseURL+`shoutouts/${this.props.shoutout.id}`, {
+            method: 'DELETE',
+            headers: {
+                Accept: 'application/json',
+                'Access-Token': localStorage.getItem('token')
+            }
+        }).then(res => res.json()).then(message => {
+            console.log('the message is', message)
+            this.props.removeShoutout(message.shoutout)
+            this.props.hideModal()
+        })
+    }
+
+    renderDeleteButton = () => {
+        if (this.props.shoutout.id) {
+            return <Modal.Actions>
+                <Button onClick={this.deleteShoutout} color='red'>Delete Shoutout</Button>
+            </Modal.Actions>
+        }
+    }
+
     render() {
+        // this.selectContent()
         return <Modal 
-                    open={this.props.open} 
+                    open={this.props.open}
                     dimmer='blurring'
+                    // trigger={this.props.trigger}
                 >
             <Modal.Header>Thank Somebody!</Modal.Header>
             <Modal.Content>
@@ -189,6 +272,7 @@ class NewShoutoutForm extends React.Component {
                         }}>Cancel</Button>
                 </Form>
             </Modal.Content>
+            {this.renderDeleteButton()}
             <MentionSelector 
                 open={this.state.showingMentioner}
                 friends={this.props.friends}

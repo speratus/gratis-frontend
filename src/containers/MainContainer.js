@@ -18,7 +18,12 @@ class MainContainer extends React.Component {
             allData: {},
             shoutouts: [],
             mentions: [],
-            addingNewShoutout: false
+            addingNewShoutout: false,
+            editingShoutout: false,
+            shoutout: {
+                content: "",
+                mentions: []
+            }
         }
     }
 
@@ -44,7 +49,29 @@ class MainContainer extends React.Component {
     }
 
     hideModal = () => {
-        this.setState({addingNewShoutout: false})
+        this.setState({
+            addingNewShoutout: false,
+            shoutout: {
+                content: "",
+                mentions: []
+            }
+        })
+    }
+
+    replaceShoutout = shoutout => {
+        const shoutouts = this.state.shoutouts.map(s => s.id === shoutout.id ? shoutout : s)
+        this.setState({shoutouts: shoutouts})
+    }
+
+    shoutoutEditClicked = shoutout => {
+        console.log(shoutout)
+        this.setState({addingNewShoutout: true, shoutout: shoutout})
+    }
+
+    removeShoutout = shoutout => {
+        const newShoutouts = this.state.shoutouts.filter(s => s.id !== shoutout.id)
+        // console.log('deleted shoutout', shoutout, 'old shoutouts', this.state.shoutouts, 'new shoutouts', newShoutouts)
+        this.setState({shoutouts: newShoutouts})
     }
 
     renderHomeIfLoggedIn() {
@@ -53,14 +80,20 @@ class MainContainer extends React.Component {
                 <Grid centered columns={3}>
                     <Grid.Column>
                         <Rail position='left'>
+                            
                             <Button onClick={this.addNewForm}><Icon name="plus"/>New Shoutout</Button>
                         </Rail>
-                        <ShoutoutList shoutouts={this.state.mentions} heading={"You've been thanked!"}/>
+                        <ShoutoutList 
+                            shoutouts={this.state.mentions} 
+                            heading={"You've been thanked!"} 
+                            />
                         <Rail position='right'>
                             <SidebarList 
                             shoutouts={this.state.shoutouts} 
                             heading={"Your Shoutouts"}
                             small
+                            editable
+                            onEdit={this.shoutoutEditClicked}
                             />
                         </Rail>
                     </Grid.Column>
@@ -71,6 +104,9 @@ class MainContainer extends React.Component {
                     friends={this.state.allData.friends}
                     currentUserId={this.state.allData.id}
                     addShoutout={this.addShoutout}
+                    replaceShoutout={this.replaceShoutout}
+                    shoutout={this.state.shoutout}
+                    removeShoutout={this.removeShoutout}
                 />
             </React.Fragment>
         } else {

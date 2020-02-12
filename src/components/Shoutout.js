@@ -1,6 +1,8 @@
 import React from 'react'
 
-import {Segment, Feed, Item, Header} from 'semantic-ui-react'
+import {Segment, Feed, Item, Header, Button} from 'semantic-ui-react'
+
+import NewShoutoutForm from './NewShoutoutForm'
 
 const Shoutout = props => {
     const {name, username, avatar} = props.shoutout.user
@@ -20,6 +22,12 @@ const Shoutout = props => {
         }
     }
 
+    const editable = () => {
+        if (props.editable) {
+            return <Button basic onClick={() => props.onEdit(props.shoutout)}>Edit Shoutout</Button>
+        }
+    }
+
     const correctRender = () => {
         if (props.small) {
             return <Item>
@@ -27,6 +35,9 @@ const Shoutout = props => {
                 <Item.Content>
                     {mentionText} {content}
                 </Item.Content>
+                <Item.Extra>
+                    {editable()}
+                </Item.Extra>
             </Item>
         } else {
             return <Feed.Event>
@@ -36,6 +47,7 @@ const Shoutout = props => {
                     <Feed.Extra as='h2'>
                         {mentionText} {content}
                     </Feed.Extra>
+                    {editable()}
                 </Feed.Content>
 
             </Feed.Event>

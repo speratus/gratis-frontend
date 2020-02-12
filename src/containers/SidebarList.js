@@ -15,6 +15,8 @@ const SidebarList = props => {
                     small={props.small} 
                     includeHeader={props.includeHeader}
                     removeUser={props.removeUser}
+                    editable={props.editable}
+                    onEdit={props.onEdit}
                 />)
             }
         </Feed>

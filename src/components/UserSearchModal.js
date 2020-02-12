@@ -34,7 +34,7 @@ class UserSearchModal extends React.Component {
     onSearchChange = (e, {value}) => {
         const results = this.state.people.filter(p => {
             const {username, name} = p
-            return username.startsWith(value) || name.toLowerCase().startsWith(value)
+            return username.startsWith(value) || name.toLowerCase().startsWith(value.toLowerCase())
         })
 
         this.setState({results: results, value: value})

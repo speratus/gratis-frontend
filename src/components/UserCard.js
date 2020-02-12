@@ -27,7 +27,9 @@ const UserCard = props => {
                         status: 'following'
                     }
                 })
-            }).then(res => res.json()).then(console.log)
+            }).then(res => res.json()).then(friend => {
+                props.history.push({pathname: '/friends', state: {friend: friend}})
+            })
         }
     }
 
