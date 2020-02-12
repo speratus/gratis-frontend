@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {Segment, Feed, Item, Header, Button} from 'semantic-ui-react'
+import {Segment, Feed, Item, Header, Button, Icon} from 'semantic-ui-react'
 
 import NewShoutoutForm from './NewShoutoutForm'
 
@@ -24,7 +24,7 @@ const Shoutout = props => {
 
     const editable = () => {
         if (props.editable) {
-            return <Button basic onClick={() => props.onEdit(props.shoutout)}>Edit Shoutout</Button>
+            return <Button basic onClick={() => props.onEdit(props.shoutout)}><Icon name="edit outline"/>Edit Shoutout</Button>
         }
     }
 
