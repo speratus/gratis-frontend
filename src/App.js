@@ -37,7 +37,11 @@ class App extends React.Component {
   render() {
     return (
       <Router>
-        <Navbar loggedIn={this.state.loggedIn} onLogout={this.onLogout}/>
+        <Navbar 
+          loggedIn={this.state.loggedIn} 
+          onLogout={this.onLogout}
+          currentUserId={this.state.currentUserId}
+        />
         <Switch>
           <Route exact path='/'>
             <MainContainer loggedIn={this.state.loggedIn}/>
