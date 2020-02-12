@@ -15,7 +15,8 @@ import FriendContainer from './containers/FriendContainer'
 class App extends React.Component {
 
   state = {
-    loggedIn: false
+    loggedIn: false,
+    currentUserId: 0
   }
 
   componentDidMount() {
@@ -29,8 +30,8 @@ class App extends React.Component {
     this.setLoggedIn(false)
   }
 
-  setLoggedIn = loggedIn => {
-    this.setState({loggedIn: loggedIn})
+  setLoggedIn = (loggedIn, userId) => {
+    this.setState({loggedIn: loggedIn, currentUserId: userId})
   }
 
   render() {

@@ -48,7 +48,7 @@ class FriendContainer extends React.Component {
                     <Rail position='left'>
                         <SidebarList 
                             shoutouts={this.state.mentions} 
-                            heading={`${this.state.allData.name} has been thanked here!`}
+                            heading={`${this.state.allData.name} has been thanked by these people!`}
                             small
                             includeHeader
                         />

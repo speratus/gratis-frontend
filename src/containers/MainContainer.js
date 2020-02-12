@@ -57,7 +57,11 @@ class MainContainer extends React.Component {
                         </Rail>
                         <ShoutoutList shoutouts={this.state.mentions} heading={"You've been thanked!"}/>
                         <Rail position='right'>
-                            <SidebarList shoutouts={this.state.shoutouts} heading={"Your Shoutouts"}/>
+                            <SidebarList 
+                            shoutouts={this.state.shoutouts} 
+                            heading={"Your Shoutouts"}
+                            small
+                            />
                         </Rail>
                     </Grid.Column>
                 </Grid>
