@@ -2,6 +2,8 @@ import React from 'react'
 
 import {Grid, Form, Button, Header, Segment} from 'semantic-ui-react'
 
+import {baseURL} from '../index'
+
 class SignupForm extends React.Component {
     state = {
         username: '',
@@ -14,6 +16,19 @@ class SignupForm extends React.Component {
     onChange = e => {
         this.setState({
             [e.target.name]: e.target.value
+        })
+    }
+
+    onSubmit = e => {
+        e.preventDefault()
+
+        fetch(baseURL+'users', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json'
+            },
+            //body: FIX THIS LATER
         })
     }
 
